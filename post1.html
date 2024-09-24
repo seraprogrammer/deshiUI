@@ -1,4 +1,6 @@
-<a href="https://github.com/seraprogrammer/deshiUI/blob/main/post1.html">Source Code</a>
+<a href="https://github.com/seraprogrammer/deshiUI/blob/main/post1.html"
+  >Source Code</a
+>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -131,12 +133,97 @@
         opacity: 1;
         transform: skew(0);
       }
+      /* Fade In */
+      .fade {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .fade.show {
+        opacity: 1;
+      }
+
+      /* wave */
+
+      .wave {
+        animation: wave-animation 1.5s infinite;
+      }
+      @keyframes wave-animation {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .wave.show {
+        animation: wave-animation 1.5s infinite;
+      }
+
+      /* shake */
+
+      .shake {
+        animation: shake-animation 0.5s ease;
+      }
+      @keyframes shake-animation {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .shake.show {
+        animation: shake-animation 0.5s ease;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
 
     <template>
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleshake()">Show/Hide shake</button>
+        </div>
+        <h1 class="shake" $class="{ show: isshakeShow }">
+          This section skews in and out. dolor sit amet, consectetur adipisicing
+          elit. Consectetur nesciunt quibusdam saepe enim. Molestiae fuga
+          laudantium dolor in asperiores quaerat.
+        </h1>
+      </div>
+
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleFade()">Show/Hide fade</button>
+        </div>
+        <h1 class="fade" $class="{ show: isFadeShow }">
+          This section skews in and out. dolor sit amet, consectetur adipisicing
+          elit. Consectetur nesciunt quibusdam saepe enim. Molestiae fuga
+          laudantium dolor in asperiores quaerat.
+        </h1>
+      </div>
+
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleWave()">Show/Hide wave</button>
+        </div>
+        <h1 class="wave" $class="{ show: iswaveShow }">
+          This section skews in and out. dolor sit amet, consectetur adipisicing
+          elit. Consectetur nesciunt quibusdam saepe enim. Molestiae fuga
+          laudantium dolor in asperiores quaerat.
+        </h1>
+      </div>
+
       <!-- Default Expand/Collapse Transition -->
       <div class="collapse">
         <div class="btn">
@@ -156,10 +243,9 @@
           <button @click="toggleBounce()">Show/Hide Bounce</button>
         </div>
         <h1 class="bounce" $class="{ show: isBounceShow }">
-          This section bounces when expanding or collapsing.
-          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
-          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
-          quaerat.
+          This section bounces when expanding or collapsing. dolor sit amet,
+          consectetur adipisicing elit. Consectetur nesciunt quibusdam saepe
+          enim. Molestiae fuga laudantium dolor in asperiores quaerat.
         </h1>
       </div>
 
@@ -169,10 +255,9 @@
           <button @click="toggleZoom()">Show/Hide Zoom</button>
         </div>
         <h1 class="zoom" $class="{ show: isZoomShow }">
-          This section zooms in and out.
-          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
-          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
-          quaerat.
+          This section zooms in and out. dolor sit amet, consectetur adipisicing
+          elit. Consectetur nesciunt quibusdam saepe enim. Molestiae fuga
+          laudantium dolor in asperiores quaerat.
         </h1>
       </div>
 
@@ -182,10 +267,9 @@
           <button @click="toggleRotate()">Show/Hide Rotate</button>
         </div>
         <h1 class="rotate" $class="{ show: isRotateShow }">
-          This section rotates when expanding and collapsing.
-          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
-          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
-          quaerat.
+          This section rotates when expanding and collapsing. dolor sit amet,
+          consectetur adipisicing elit. Consectetur nesciunt quibusdam saepe
+          enim. Molestiae fuga laudantium dolor in asperiores quaerat.
         </h1>
       </div>
 
@@ -195,10 +279,9 @@
           <button @click="toggleFlip()">Show/Hide Flip</button>
         </div>
         <h1 class="flip" $class="{ show: isFlipShow }">
-          This section flips horizontally.
-          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
-          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
-          quaerat.
+          This section flips horizontally. dolor sit amet, consectetur
+          adipisicing elit. Consectetur nesciunt quibusdam saepe enim. Molestiae
+          fuga laudantium dolor in asperiores quaerat.
         </h1>
       </div>
 
@@ -208,10 +291,9 @@
           <button @click="toggleSkew()">Show/Hide Skew</button>
         </div>
         <h1 class="skew" $class="{ show: isSkewShow }">
-          This section skews in and out.
-          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
-          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
-          quaerat.
+          This section skews in and out. dolor sit amet, consectetur adipisicing
+          elit. Consectetur nesciunt quibusdam saepe enim. Molestiae fuga
+          laudantium dolor in asperiores quaerat.
         </h1>
       </div>
     </template>
@@ -227,6 +309,10 @@
         isRotateShow: false,
         isFlipShow: false,
         isSkewShow: false,
+        isFadeShow: false,
+        iswaveShow: false,
+        isshakeShow: false,
+
         toggleShow: function () {
           this.isShow = !this.isShow;
         },
@@ -245,8 +331,16 @@
         toggleSkew: function () {
           this.isSkewShow = !this.isSkewShow;
         },
+        toggleFade: function () {
+          this.isFadeShow = !this.isFadeShow;
+        },
+        toggleWave: function () {
+          this.iswaveShow = !this.iswaveShow;
+        },
+        toggleshake: function () {
+          this.isshakeShow = !this.isshakeShow;
+        },
       };
     </script>
   </body>
 </html>
-
