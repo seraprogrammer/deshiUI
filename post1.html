@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expand & Collapse with Multiple Transitions</title>
+    <style>
+      #root {
+        margin: 10px;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        background-color: #020417;
+        color: #fff;
+      }
+      .collapse {
+        padding: 10px;
+        box-shadow: 0px 0px 1px #ffffff;
+        margin-bottom: 20px;
+      }
+      .btn button {
+        padding: 8px 23px;
+        border: 1px solid #dfdada;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      /* Default Expand/Collapse (Scale + Opacity + Max-Height) */
+      h1 {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        opacity: 0;
+        transform: scale(0.9);
+        transition: max-height 0.4s ease-out, opacity 0.4s ease-in-out,
+          transform 0.4s ease-in-out, padding 0.4s ease-in-out;
+      }
+      h1.show {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Bounce Transition */
+      .bounce {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        transform: translateY(-20px);
+        opacity: 0;
+        transition: max-height 0.5s ease-out,
+          transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+          opacity 0.5s ease-in-out;
+      }
+      .bounce.show {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Zoom Transition */
+      .zoom {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        transform: scale(0);
+        opacity: 0;
+        transition: max-height 0.5s ease-out, transform 0.5s ease-in-out,
+          opacity 0.5s ease-in-out;
+      }
+      .zoom.show {
+        max-height: 500px;
+        padding: 10px 0;
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      /* Rotate Transition */
+      .rotate {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        opacity: 0;
+        transform: rotate(-90deg);
+        transition: max-height 0.5s ease-out, opacity 0.5s ease-in-out,
+          transform 0.5s ease-in-out;
+      }
+      .rotate.show {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+
+      /* Flip Transition */
+      .flip {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        opacity: 0;
+        transform: rotateY(90deg);
+        transition: max-height 0.5s ease-out, opacity 0.5s ease-in-out,
+          transform 0.5s ease-in-out;
+        transform-origin: left;
+      }
+      .flip.show {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        transform: rotateY(0deg);
+      }
+
+      /* Skew Transition */
+      .skew {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        opacity: 0;
+        transform: skew(-10deg);
+        transition: max-height 0.5s ease-out, opacity 0.5s ease-in-out,
+          transform 0.5s ease-in-out;
+      }
+      .skew.show {
+        max-height: 500px;
+        padding: 10px 0;
+        opacity: 1;
+        transform: skew(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <template>
+      <!-- Default Expand/Collapse Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleShow()">Show/Hide Default</button>
+        </div>
+        <h1 $class="{ show: isShow }">
+          Default transition with expand, fade, and scale effect. Lorem ipsum
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+
+      <!-- Bounce Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleBounce()">Show/Hide Bounce</button>
+        </div>
+        <h1 class="bounce" $class="{ show: isBounceShow }">
+          This section bounces when expanding or collapsing.
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+
+      <!-- Zoom Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleZoom()">Show/Hide Zoom</button>
+        </div>
+        <h1 class="zoom" $class="{ show: isZoomShow }">
+          This section zooms in and out.
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+
+      <!-- Rotate Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleRotate()">Show/Hide Rotate</button>
+        </div>
+        <h1 class="rotate" $class="{ show: isRotateShow }">
+          This section rotates when expanding and collapsing.
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+
+      <!-- Flip Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleFlip()">Show/Hide Flip</button>
+        </div>
+        <h1 class="flip" $class="{ show: isFlipShow }">
+          This section flips horizontally.
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+
+      <!-- Skew Transition -->
+      <div class="collapse">
+        <div class="btn">
+          <button @click="toggleSkew()">Show/Hide Skew</button>
+        </div>
+        <h1 class="skew" $class="{ show: isSkewShow }">
+          This section skews in and out.
+          dolor sit amet, consectetur adipisicing elit. Consectetur nesciunt
+          quibusdam saepe enim. Molestiae fuga laudantium dolor in asperiores
+          quaerat.
+        </h1>
+      </div>
+    </template>
+
+    <script type="module" defer>
+      import deshi from "//unpkg.com/deshijs";
+      deshi.init();
+
+      signal = {
+        isShow: false,
+        isBounceShow: false,
+        isZoomShow: false,
+        isRotateShow: false,
+        isFlipShow: false,
+        isSkewShow: false,
+        toggleShow: function () {
+          this.isShow = !this.isShow;
+        },
+        toggleBounce: function () {
+          this.isBounceShow = !this.isBounceShow;
+        },
+        toggleZoom: function () {
+          this.isZoomShow = !this.isZoomShow;
+        },
+        toggleRotate: function () {
+          this.isRotateShow = !this.isRotateShow;
+        },
+        toggleFlip: function () {
+          this.isFlipShow = !this.isFlipShow;
+        },
+        toggleSkew: function () {
+          this.isSkewShow = !this.isSkewShow;
+        },
+      };
+    </script>
+  </body>
+</html>
 
